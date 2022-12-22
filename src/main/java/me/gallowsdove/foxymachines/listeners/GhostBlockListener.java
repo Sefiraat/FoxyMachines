@@ -5,6 +5,7 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -14,6 +15,14 @@ public class GhostBlockListener implements Listener {
         if (e.getCaught() instanceof FallingBlock b &&
                 b.getPersistentDataContainer().has(GhostBlock.KEY, PersistentDataType.STRING)) {
             e.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onBlockLands(EntityChangeBlockEvent event) {
+        if (event.getEntity() instanceof FallingBlock b &&
+                b.getPersistentDataContainer().has(GhostBlock.KEY, PersistentDataType.STRING)) {
+            event.setCancelled(true);
         }
     }
 }
